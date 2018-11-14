@@ -1,0 +1,231 @@
+The Fragpy keywords can be used to overwrite its default parameters. Look into the examples to see how this can be done.
+
+-------------------
+KEYWORD     DEFAULT
+OPTIONS
+DESCRIPTION
+-------------------
+     
+con         'fnb'
+'fnb','fb','s'
+Whether to perform fragment optimisation with the non-bonded contributions included ('fnb') or exclude it ('fb') or perform a conventional supermolecular optimisation ('s').
+
+DEBUG        1
+Integer
+A value of zero prints a very short information as the optimisation proceeds while a value of one adds more informations. Higher values may print detailed informations.
+
+Prestart     False
+True, False
+Fragpy can write a restart.file file which is necessary if you wish you to restart a calculation again.
+
+restart      False
+True, False
+Restart a previous calculation. restart.file from the previous execution is mandatory in this case.
+
+method      'mp2'
+'mp2'
+The method with which you wish to perform the fragment calculation.
+
+cmethod     'scf'
+'scf'
+The method for the correction term
+
+basis       'cc-pVDZ'
+basis set in the respective program's format
+Basis set at which the fragment calculation is to be perform.
+
+basis_jk    'cc-pVDZ-jkfit'
+auxillary basis set in the respective program's format
+Basis set at which the fragment calculation is to be perform.
+
+basis_mp2   'cc-pVDZ-ri'
+auxillary basis set in the respective program's format
+Basis set at which the fragment calculation is to be perform.
+
+cbasis      'STO-3G'
+basis set in the respective program's format
+Basis set for the correction term.
+
+cbasis_jk   'cc-pVDZ-jkfit'
+auxillary basis set in the respective program's format
+Basis set for the correction term.
+
+cbasis_mp2  'cc-pVDZ-ri'
+auxillary basis set in the respective program's format
+Basis set for the correction term.
+
+E_conv      '1e-8'   
+value as a string
+Energy convergence for scf
+
+D_conv      '1e-8'
+value as a string
+Density convergence for scf
+
+O_conv      '1e-7'
+value as a string
+Convergence threshold for orbitals
+
+MAXG        3.0e-4
+a float
+Convergence criteria for geometry optimisation - maximum component of the gradient in a.u.
+
+DELE        1.0e-6
+a float
+Convergence criteria for geometry optimisation - energy change
+
+MAXQ        1.8e-3
+a float
+Convergence criteria for geometry optimisation - maximum step length
+
+-----------------------------
+NOTE: CONVERGENCE CRITERIA 
+
+(MAXG and DELE) or (MAXG and MAXQ)
+----------------------------
+
+bonthres    4.0e0
+a float
+Cut-off distance for dummy centers in the bonded fragment in Angstrom.
+
+cbonthres   4.0e0
+a float
+Cut-off distance for dummy centers in the bonded fragment - correction term in Angstrom.
+
+thresnb     4.0e10
+a float
+Cut-off distance for negecting non-bonded contributions in Angstrom.
+
+cthresnb    4.0e10
+a float
+Cut-off distance for negecting non-bonded contributions - correction term in Angstrom.
+
+old_trust   False
+bool
+See Tupdate() in fragpy/update for the two options.
+
+OPTstep     'RF'
+'RF', 'SRF'
+Geometry optimisation method - 'RF' Rational function optimisation with simple step restriction; 'SRF' Rational function optimisation with automated step restriction.
+
+modelHtype  'R'
+'R', 'S'
+Model Hessian types - R. Lindh Chem. Phys. Lett., 241, 423, 1995 or Theoret. Chim. Acta 66, 333, 1984
+
+LBFGS       True
+True
+Limited memory BFGS update of the hessian.
+
+ITMAX       300
+integer
+Maximum number of optimisation cycles.
+
+trust       0.3
+float
+Initial trust radius in Angstrom.
+
+stepmax     0.3
+float
+Maximum step length allowed in Angstrom
+
+stepmin     0.01
+float
+Minimum step length allowed in Angstrom
+
+updateT     False
+bool
+DO NOT CHANGE THIS
+
+updateFT    False
+bool
+Whether to follow a fixed trust radius update based on the energy change and maximum component of the gradients, see fragpy/update.py Fupdate().
+
+updateH     False
+bool
+DO NOT CHANGE THIS
+
+FIXGEOM     True
+bool
+Whether to fix the internal coordinates during the geometry optimisation process.
+
+l1o1        True
+True
+Many-body (two terms) approach to the non-bonded interactions.
+
+nbscale     1.0e0
+float
+Scale the bond length of the capping hydrogen in the non-bonded term.
+
+coarse      False
+bool
+Correction increment using a larger size fragmentation scheme.
+
+coarse_level  2
+1, 2
+Two includes yet another correction increment as SUP - FRAGMENT as a smaller basis set while One does not.
+
+dumfrag     False
+bool
+Whether to use dummy centers at the adjoining groups.
+
+dumfrag_level  1
+integer
+Number of adjoining groups to include the dummy centers.
+
+
+parallel      1
+integer
+Number of compute nodes Fragpy can use. Incase of more than one, pass the bash command line below.
+
+-------------------------------------------------------
+PBS
+
+cd $WORK
+NODE_LIST=`cat $PBS_NODEFILE`
+echo $NODE_LIST > nodes.txt
+
+SLURM
+
+cd ${SLURM_SUBMIT_DIR}
+scontrol show hostnames $SLURM_JOB_NODELIST > nodes.txt
+--------------------------------------------------------
+
+procs         1
+integer
+Number of processors in a node.
+
+self.USER    getpass.getuser()
+A string or do not change
+Username.
+
+scvaria      str(os.environ["SCVARIA"])
+An enviroment variable SCVARIA which is set to a scratch directory.
+Scratch directory used. Set SCVARIA as an environment variable.
+
+param.bashlines  []
+a list of strings
+Bash command lines to pass when using more than one node.
+
+PSI4   ''
+a string
+Path to the PSI4 executable. See README file.
+
+MOLPRO  ''
+a string
+Path to the MOLPRO executable. See README file
+
+program PSI4
+PSI4 MOLPRO GAUSSIAN
+A quantum chemistry code to compute energies and gradients.
+
+memory  1000
+integer 
+Memory specification in MB (PSI4) or MW (MOLPRO)
+
+GAUSSIAN ''
+a string
+Path to the GAUSSIAN executable. See README file
+
+gau_command []
+a list of strings
+Gaussian commands to add to the calculation. e.g., PCM model, etc...
